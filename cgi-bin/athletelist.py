@@ -1,5 +1,3 @@
-from os.path import dirname, abspath
-
 def sanitize(time_string):
     if '-' in time_string:
         splitter = '-'
@@ -35,7 +33,7 @@ class AthleteList(list):
         return sorted(set(self))[:3]
 
 if __name__ == '__main__':
-    path = dirname(abspath(__file__)) + '/../data/sarah.txt'
+    path = 'data/sarah.txt'
     sarch = get_coach_data(path)
     print(sarch.name)
     print(sarch.dob)

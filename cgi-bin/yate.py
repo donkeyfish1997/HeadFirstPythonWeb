@@ -10,6 +10,7 @@ def start_response(resp='text/html'):
 
 def include_header(the_title):
     # 此葉面本身被存放在 templates/header.html 這個獨立的檔案中，而且會依需要替換title
+
     with open('templates/header.html') as headf:
         head_text = headf.read()
     header = Template(head_text)
@@ -25,6 +26,7 @@ def include_footer(the_links):
     :param the_links:
     :return:
     """
+
     with open('templates/footer.html') as footf:
         foot_text = footf.read()
     link_string = ''
@@ -97,3 +99,4 @@ def para(para_text):
     :return:
     """
     return '<p>' + para_text + '</p>'
+

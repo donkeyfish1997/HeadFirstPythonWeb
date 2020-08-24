@@ -1,6 +1,5 @@
 import pickle
 import athletelist as im
-from os.path import dirname, abspath
 
 
 def put_to_store(files_list):
@@ -28,10 +27,12 @@ def get_from_store():
     return (all_athletes)
 
 
-path = dirname(abspath(__file__)) + '/../data/'
-files_list = [path + 'james.txt', path + 'julie.txt', path + 'mikey.txt', path + 'sarah.txt']
+if __name__ == '__main__':
 
-data = put_to_store(files_list)
+    path = 'data/'
+    files_list = [path + 'james.txt', path + 'julie.txt', path + 'mikey.txt', path + 'sarah.txt']
 
-for each_data in data:
-    print(data[each_data].name, data[each_data].dob, data[each_data], sep='\t')
+    data = put_to_store(files_list)
+
+    for each_data in data:
+        print(data[each_data].name, data[each_data].dob, data[each_data], sep='\t')
