@@ -29,8 +29,9 @@ class AthleteList(list):
         self.dob = a_dob
         self.extend(a_times)
 
+    @property
     def top3(self):
-        return sorted(set(self))[:3]
+        return sorted(set([sanitize(tmp) for tmp in self]))[:3]
 
 if __name__ == '__main__':
     path = 'data/sarah.txt'
@@ -38,7 +39,7 @@ if __name__ == '__main__':
     print(sarch.name)
     print(sarch.dob)
     print(sarch)
-    print(sarch.top3())
+    print(sarch.top3)
     sarch.append('1.55')
-    print(sarch.top3())
+    print(sarch.top3)
 
