@@ -55,7 +55,6 @@ def end_form(submit_msg="Submit"):
     return ('<p></p><input type=submit value="' + submit_msg + '"></form>')
 
 
-
 def radio_button(rb_name, rb_value):
     """
     提供一個單選按鈕的名稱與值
@@ -99,4 +98,21 @@ def para(para_text):
     :return:
     """
     return '<p>' + para_text + '</p>'
+
+
+def create_inputs(inputs_list):
+    html_inputs = ''
+    for each_input in inputs_list:
+        html_inputs += '<input type="Text" name="' \
+                       + each_input + '" size = 40>'
+    return html_inputs
+
+
+def do_form(name, the_inputs, method="POST", text="Submit"):
+    with open('templates/form.html') as formf:
+        form_text = formf.read()
+    inputs = create_inputs(the_inputs)
+    form = Template(form_text)
+    return form.safe_substitute(cgi_name=name, http_method=method,
+                                list_of_inputs=inputs, submit_text=text)
 
