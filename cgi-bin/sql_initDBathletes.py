@@ -12,5 +12,15 @@ for each_athlete in athletes:
     name = athletes[each_athlete].name
     dob = athletes[each_athlete].dob
     cursor.execute("INSERT INTO athletes (name,dob) VALUES (?,?)", (name, dob))
-    connection.commit()
+    # print(name,dob,athletes[each_athlete])
+    cursor.execute("SELECT id FROM athletes WHERE name = ? AND dob = ?", (name, dob))
+    the_current_id = cursor.fetchone()[0]
+    # print(the_current_id)
+    # print(athletes[each_athlete].clean_data)
+    for each_time in athletes[each_athlete].clean_data:
+        cursor.execute("INSERT INTO timing (athlete_id,value) VALUES (?,?)", (the_current_id, each_time))
+
+
+
+connection.commit()
 connection.close()

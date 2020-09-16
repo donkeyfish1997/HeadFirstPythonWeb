@@ -32,6 +32,9 @@ class AthleteList(list):
     @property
     def top3(self):
         return sorted(set([sanitize(tmp) for tmp in self]))[:3]
+    @property
+    def clean_data(self):
+        return sorted(set([sanitize(tmp) for tmp in self]))
 
 if __name__ == '__main__':
     path = 'data/sarah.txt'
