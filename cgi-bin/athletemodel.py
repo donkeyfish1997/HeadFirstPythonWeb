@@ -1,41 +1,41 @@
-import pickle
-import athletelist as im
+import sqlite3
+
+def get_names_from_store():
 
 
-def put_to_store(files_list):
-    all_athletes = {}
-    for each_file in files_list:
-        ath = im.get_coach_data(each_file)
-        all_athletes[ath.name] = ath
+    connection = sqlite3.connect('coachdata.sqlite')
+    cursor = connection.cursor()
 
-    try:
-        with open('athletes.pickle', 'wb') as athf:
-            pickle.dump(all_athletes, athf)
-    except IOError as err:
-        print('IOError is ', err)
+    cursor.execute("SELECT name FROM athletes")
+    response = [row[0] for row in cursor.fetchall()]
+    connection.close()
+    return response
 
-    return (all_athletes)
+def get_ID_from_name(athlete_name):
+    connection = sqlite3.connect('coachdata.sqlite')
+    cursor = connection.cursor()
 
+    cursor.execute("SELECT id FROM athletes WHERE name = ?",(athlete_name,))
+    response = cursor.fetchone()[0]
+    connection.close()
+    return response
 
-def get_from_store():
-    all_athletes = {}
-    try:
-        with open('athletes.pickle', 'rb') as athf:
-            all_athletes = pickle.load(athf)
-    except IOError as err:
-        print('IOError is', err)
+def get_athlete_from_id(athlete_id):
+    connection = sqlite3.connect('coachdata.sqlite')
+    cursor = connection.cursor()
 
-    return (all_athletes)
+    cursor.execute("SELECT name,dob FROM athletes WHERE id = ?",(athlete_id,))
+    (name,dob) = cursor.fetchone()
 
+    cursor.execute("SELECT value FROM timing WHERE athlete_id = ?", (athlete_id,))
+    data = [row[0] for row in cursor.fetchall()]
 
-if __name__ == '__main__':
+    response = {
+        'Name':name,
+        'DOB':dob,
+        'data':data,
+        'top3':data[:3],
+    }
+    connection.close()
+    return response
 
-    # path = 'data/'
-    # files_list = [path + 'james.txt', path + 'julie.txt', path + 'mikey.txt', path + 'sarah.txt']
-    #
-    # data = put_to_store(files_list)
-    #
-    # for each_data in data:
-    #     print(data[each_data].name, data[each_data].dob, data[each_data], sep='\t')
-    print('fff')
-    print(get_from_store())
