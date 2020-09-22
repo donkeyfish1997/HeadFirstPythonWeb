@@ -66,6 +66,14 @@ def radio_button(rb_name, rb_value):
             rb_value + '"> ' + rb_value + '<br />')
 
 
+def input_text(ip_name, ip_value=""):
+    """
+    表格輸入的 Text
+    """
+    return para(ip_name) + '<p><input type="text" name="{name}" value="{value}"></p>'.format(name=ip_name,
+                                                                                             value=ip_value)
+
+
 def u_list(items):
     """
     提供一個項目清單，此函式會將該清單轉換成一個 HTML 無編號列表(unnumbered list)。
@@ -115,4 +123,3 @@ def do_form(name, the_inputs, method="POST", text="Submit"):
     form = Template(form_text)
     return form.safe_substitute(cgi_name=name, http_method=method,
                                 list_of_inputs=inputs, submit_text=text)
-

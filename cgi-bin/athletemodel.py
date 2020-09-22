@@ -20,6 +20,15 @@ def get_ID_from_name(athlete_name):
     connection.close()
     return response
 
+def add_time_from_id(the_current_id,each_time):
+    connection = sqlite3.connect('coachdata.sqlite')
+    cursor = connection.cursor()
+
+    cursor.execute("INSERT INTO timing (athlete_id,value) VALUES (?,?)", (the_current_id, each_time))
+    connection.commit()
+    connection.close()
+
+
 def get_athlete_from_id(athlete_id):
     connection = sqlite3.connect('coachdata.sqlite')
     cursor = connection.cursor()
@@ -34,7 +43,7 @@ def get_athlete_from_id(athlete_id):
         'Name':name,
         'DOB':dob,
         'data':data,
-        'top3':data[:3],
+        'top3':sorted(data)[:3],
     }
     connection.close()
     return response
